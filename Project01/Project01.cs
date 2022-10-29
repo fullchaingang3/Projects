@@ -63,16 +63,30 @@ namespace CISP1010
             } // end of PrompForChar
             
             // Prompt user for char hidden
-            static char PromptForCharHidden(string? messagePrompt)
+            static char PromptForCharHidden(string messagePrompt)
             {
                 Console.ForegroundColor = ConsoleColor.White;
-                int selection;
+                char selection;
+                //do
+                //{
+                //    HiddenSelection();
+                //}
+                //while (selection != '1' || selection != '2' || selection != '3');
                 Console.WriteLine(messagePrompt);
                 Console.CursorVisible = false;
                 selection = Console.ReadKey(true).KeyChar;
-
                 return (char)selection;
             } // end of PrompForCharHidden
+
+            // Hidden part
+            //static char HiddenSelection(string messagePrompt)
+            //{
+            //    int selection;
+            //    Console.WriteLine(messagePrompt);
+            //    Console.CursorVisible = false;
+            //    selection = Console.ReadKey(true).KeyChar;
+            //    return (char)selection;
+            //}
 
             // Prompt user for string
             static string PromptForString(string messagePrompt)
@@ -260,7 +274,7 @@ namespace CISP1010
             }
             #endregion
 
-            #region "UI Methods"
+            #region "ASCII"
 
             // Menu in ASCII
             static void MenuBanner()
@@ -369,6 +383,9 @@ namespace CISP1010
                 Console.WriteLine("@@@@@@@@@@@@&&&@@@@@@@@@@@@@@GGGGGBB#&&@@@@@@@@@@@@@@@#BBBBBBBPG#BBBG&PP&@@&PPG55YPGPP##BB#GBGBBBBBB##BGBJ!7JP&&&@@@@@&BB&@@@@@@@@@@@&#B#@B#@@@&57G5!77??7?Y5555");
                 Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#BBBBBB##BGGGG#&@BP&@#@GPGYPGGPGB#&B##BBBBBB##BBB#G555B&@@@@#BB@&&&@@@@@@@@@@@@@@&&&&BB#&&@&5BP7?????7!?555");
             } // end of PrintLargeWelcomeMessage
+            #endregion
+
+            #region "UI Methods"
 
             // Small header
             static void PrintSmallHeader()
@@ -420,7 +437,10 @@ namespace CISP1010
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid option.");
+                    Console.WriteLine("                                                             Please enter a valid option.");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                    ShowMenu();
                 }
                 return menuChoice;
             } // end of ShowMenu
@@ -469,18 +489,20 @@ namespace CISP1010
             // layout for the TwoPlayerMode
             static void TwoPlayerMode()
             {
-                
+                char playerOneChoice, playerTwoChoice;
+
+
                 PrintSmallHeader();
                 Console.WriteLine();
                 TwoPlayerBattle();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.White;
-                    PromptForString("                                                        Player One, Please enter your name: ");
-                    string playerOneName = Console.ReadLine();
-                    Thread.Sleep(0500);
-                    Console.WriteLine();
-                    PromptForString("                                                        Player Two, Please enter your name: ");
-                    string playerTwoName = Console.ReadLine();
+                PromptForString("                                                        Player One, Please enter your name: ");
+                string playerOneName = Console.ReadLine();
+                Thread.Sleep(0500);
+                Console.WriteLine();
+                PromptForString("                                                        Player Two, Please enter your name: ");
+                string playerTwoName = Console.ReadLine();
                 Thread.Sleep(0500);
                 Console.WriteLine();
                 Console.WriteLine();
@@ -502,8 +524,20 @@ namespace CISP1010
                 Console.WriteLine();
                 Seperator();
                 Console.WriteLine();
-                char playerOneChoice = PromptForCharHidden("                                                                 " + playerOneName + ":");
-                char playerTwoChoice = PromptForCharHidden("                                                                 " + playerTwoName + ":");
+                do
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("                                                             Please enter a number between 1 and 3.");
+                    playerOneChoice = PromptForCharHidden("                                                                 " + playerOneName + ":");
+                }
+                while (playerOneChoice != '1' && playerOneChoice != '2' && playerOneChoice != '3');
+                do
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("                                                             Please enter a number between 1 and 3.");
+                    playerTwoChoice = PromptForCharHidden("                                                                 " + playerTwoName + ":");
+                }
+                while (playerTwoChoice != '1' && playerTwoChoice != '2' && playerTwoChoice != '3');
                 PrintResults(playerOneName, playerOneChoice, playerTwoName, playerTwoChoice);
                 Console.WriteLine();
                 Battle();
@@ -528,7 +562,8 @@ namespace CISP1010
                 Thread.Sleep(1000);
                 byte weapon = CalculateWinnerWeapon(playerOneChoice, playerTwoChoice);
                 WinnersWeapon(weapon);
-                Console.Write("Would you like to play again (y/n)? ");
+                Console.WriteLine();
+                Console.Write("                                                                 Would you like to play again (y/n)? ");
                 char playAgain = Convert.ToChar(Console.ReadKey(true).KeyChar);
                 PlayAgain(playAgain);
 
@@ -596,19 +631,19 @@ namespace CISP1010
                 string mmq6 = "                                                   Six years ago, Halloween night, Michael and Jamie vanished.\n\n";
                 string mmq7 = "                                                                                                     ~ PAUL RUDD - Tommy Doyle";
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(mmq1, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(mmq1, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(mmq2, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(mmq2, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(mmq3, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(mmq3, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(mmq4, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(mmq4, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(mmq5, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(mmq5, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(mmq6, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(mmq6, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(mmq7, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(mmq7, 005, ConsoleColor.DarkRed);
             }
 
             // Create a method for when Michael Myers wins
@@ -671,17 +706,17 @@ namespace CISP1010
                 string fkq5 = "                                                                     Nine, ten, never sleep again.\n\n";
                 Console.WriteLine();
                 string fkq6 = "                                                                              ~ A Nightmare on Elm Street (1984)";
-                ConsoleUtilities.PrintScroll(fkq1, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(fkq1, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(fkq2, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(fkq2, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(fkq3, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(fkq3, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(fkq4, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(fkq4, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(fkq5, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(fkq5, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(fkq6, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(fkq6, 005, ConsoleColor.DarkRed);
             }
 
             // Create a method for when Freddy Krueger wins
@@ -747,15 +782,15 @@ namespace CISP1010
                 string lfq3 = "                                                                     five youths were attacked in a grisly \n";
                 string lfq4 = "                                                                     and gruesome fashion by an \n ";
                 string lfq5 = "                                                                     unidentified madman.";
-                ConsoleUtilities.PrintScroll(lfq1, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(lfq1, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(lfq2, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(lfq2, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(lfq3, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(lfq3, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(lfq4, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(lfq4, 005, ConsoleColor.DarkRed);
                 Console.WriteLine();
-                ConsoleUtilities.PrintScroll(lfq5, 025, ConsoleColor.DarkRed);
+                ConsoleUtilities.PrintScroll(lfq5, 005, ConsoleColor.DarkRed);
 
                 Console.WriteLine();
             }
