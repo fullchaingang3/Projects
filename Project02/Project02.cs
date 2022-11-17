@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+﻿
+
 /// <summary> 
 /// Name: Chris Pate
 /// Email: cpate6@stumail.northeaststate.edu
-/// Purpose: Project01
+/// Purpose: Project02
 /// </summary>
 namespace CISP1010
 {
     /// <summary>
     /// Project01 - Welcome to the slayer version of Rock Paper Scissors.
     /// </summary>
-    internal class Project01
+    internal class Project02
     {
         /// <summary>
         /// The main method is the entry point for the program
@@ -35,7 +36,7 @@ namespace CISP1010
 
             do
             {
-                StartupProcess();
+                //StartupProcess();
                 menuChoice = ShowMenu();
 
                 switch (menuChoice)
@@ -413,9 +414,10 @@ namespace CISP1010
         {
             string[] myStrings = new string[] { "Sloane", "Emily", "Alana", "Marlon", "Valentina", "Diya", "Nathanial" };
 
+            string value = "";
             Random random = new Random();
-            int index = random.Next(0, strings.Length);
-            string value = (myStrings[index]);
+            int index = random.Next(0, myStrings.Length);
+            value = (myStrings[index]);
             return value;
         }
 
@@ -442,6 +444,70 @@ namespace CISP1010
             var pTwoName = Console.ReadLine();
             return pTwoName;
         } // end of PlayerTwoName
+
+        static void PlayAgainSolo(char playAgain, string playerOneName, string playerTwoName)
+        {
+            char playerOneChoice, playerTwoChoice;
+            string winner;
+            byte results, exit;
+            if (playAgain == 'Y' || playAgain == 'y')
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Clear();
+                Seperator();
+                Console.WriteLine();
+                PrintRules();
+                Console.WriteLine();
+                Console.WriteLine("                                                                 Please choose your character ");
+                Console.WriteLine("                                                      (Freaky Kougar[1], Micha Yemers[2], Featherlace[3]): ");
+                Console.WriteLine();
+                Seperator();
+                Console.WriteLine();
+                do
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("                                                             Please enter a number between 1 and 3.");
+                    playerOneChoice = PromptForCharHidden($"                                                                 {playerOneName}:");
+                }
+                while (playerOneChoice != '1' && playerOneChoice != '2' && playerOneChoice != '3');
+                char[] chars1 = new char[] { '1', '2', '3' };
+                playerTwoChoice = GetRandomChar(chars1);
+                PrintResults(playerOneName, playerOneChoice, playerTwoName, playerTwoChoice);
+                Console.WriteLine();
+                Battle();
+                Console.WriteLine();
+                Seperator();
+                Console.WriteLine();
+                Loading();
+                Thread.Sleep(3000);
+                Console.Clear();
+                Console.WriteLine();
+                CalculateWinner(playerOneChoice, playerTwoChoice);
+                results = CalculateWinner(playerOneChoice, playerTwoChoice);
+                winner = AnnounceWinner(results, playerOneChoice, playerTwoChoice);
+                Console.WriteLine();
+                PrintSmallHeader();
+                Console.WriteLine();
+                Seperator();
+                Console.WriteLine();
+                ConsoleUtilities.PrintScroll(winner, 025, ConsoleColor.DarkRed);
+                Console.WriteLine();
+                Seperator();
+                Thread.Sleep(1000);
+                Console.WriteLine();
+                Console.Write("                                                                        Would you like to play again (y/n)? ");
+                playAgain = Convert.ToChar(Console.ReadKey(true).KeyChar);
+                PlayAgainSolo(playAgain, playerOneName, playerTwoName);
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Clear();
+                ExitOption();
+            }
+        }// end of PlayAgain
 
         // Play again?
         static void PlayAgain(char playAgain, string playerOneName, string playerTwoName)
@@ -618,7 +684,7 @@ namespace CISP1010
             {
                 winner = "Error";
             }
-            return winner;
+            return winner.ToUpper();
         } // end of AnnounceWinner
 
         // Print the player names and their choices
@@ -626,7 +692,8 @@ namespace CISP1010
         {
             string playerOneChoiceString = ConvertChoiceToName(playerOneChoice);
             string playerTwoChoiceString = ConvertChoiceToName(playerTwoChoice);
-            var results = ($"                                        {pOneName} selected {playerOneChoiceString} and {pTwoName} selected {playerTwoChoiceString}.");
+            var results = ($"                                                     {pOneName} selected {playerOneChoiceString} and {pTwoName} selected {playerTwoChoiceString}.");
+            Console.WriteLine(results);
             return results;
         }// end of PrintResults
 
@@ -654,9 +721,10 @@ namespace CISP1010
         // method to just print the names who are battling
         static string Versus(string pOneName, string pTwoName)
         {
-            string versus = "";
             Console.ForegroundColor = ConsoleColor.White;
+            string versus = " ";
             versus = ($"                                                                      {pOneName} vs. {pTwoName}                     ");
+            Console.WriteLine( versus );
             return versus;
         }// end of versus
 
@@ -1728,11 +1796,10 @@ namespace CISP1010
         static void StartupProcess()
         {
             FallingWelcome();
-            PrintLargeWelcomeMessage();
             Thread.Sleep(4000);
             Console.Clear();
             Updates();
-            Thread.Sleep(2500);
+            Thread.Sleep(1000);
             Console.Clear();
         }// end of StartupProcess
         // Show menu
@@ -1813,13 +1880,52 @@ namespace CISP1010
             Console.WriteLine();
             PromptForString("                                                        Player One, Please enter your name: ");
             pOneName = PlayerOneName();
-            pTwoName = GetRandomString(value);
+            string[] myStrings = new string[] { "Sloane", "Emily", "Alana", "Marlon", "Valentina", "Diya", "Nathanial" };
+            pTwoName = GetRandomString(myStrings);
+            Console.WriteLine($"                                                        You will be playing against {pTwoName}");
+            Thread.Sleep(0500);
+            Seperator();
+            Versus(pOneName, pTwoName);
+            Thread.Sleep(3000);
+            Seperator();
+            //Console.Clear();
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("                                                                 Please choose your character ");
+                Console.WriteLine("                                                      (Freaky Kougar[1], Micha Yemers[2], Featherlace[3]): ");
+                playerOneChoice = PromptForCharHidden($"                                                                 {pOneName}:");
+            }
+            while (playerOneChoice != '1' && playerOneChoice != '2' && playerOneChoice != '3');
+            char[] chars1 = new char[] { '1', '2', '3' };
+            playerTwoChoice = GetRandomChar(chars1);
+            PrintResults(pOneName, playerOneChoice, pTwoName, playerTwoChoice);
+            Console.WriteLine();
+            Battle();
+            Console.WriteLine();
+            Seperator();
+            Console.WriteLine();
+            Loading();
             Thread.Sleep(3000);
             Console.Clear();
+            Console.WriteLine();
+            CalculateWinner(playerOneChoice, playerTwoChoice);
+            byte results = CalculateWinner(playerOneChoice, playerTwoChoice);
+            string winner = AnnounceWinner(results, playerOneChoice, playerTwoChoice);
+            Console.WriteLine();
             PrintSmallHeader();
             Console.WriteLine();
-            ShowMenu();
-            Thread.Sleep(2000);
+            Seperator();
+            Console.WriteLine();
+            ConsoleUtilities.PrintScroll(winner, 025, ConsoleColor.DarkRed);
+            Console.WriteLine();
+            Seperator();
+            Thread.Sleep(1000);
+            byte weapon = CalculateWinnerWeapon(playerOneChoice, playerTwoChoice);
+            Console.WriteLine();
+            Console.Write("                                                                        Would you like to play again (y/n)? ");
+            char playAgain = Convert.ToChar(Console.ReadKey(true).KeyChar);
+            PlayAgainSolo(playAgain, pOneName, pTwoName);
         } // end of OnePlayerMode
 
         // layout for the TwoPlayerMode
