@@ -78,16 +78,6 @@ namespace CISP1010
                 return (char)selection;
             } // end of PrompForCharHidden
 
-            // Hidden part
-            //static char HiddenSelection(string messagePrompt)
-            //{
-            //    int selection;
-            //    Console.WriteLine(messagePrompt);
-            //    Console.CursorVisible = false;
-            //    selection = Console.ReadKey(true).KeyChar;
-            //    return (char)selection;
-            //}
-
             // Prompt user for string
             static string PromptForString(string messagePrompt)
             {
@@ -383,6 +373,18 @@ namespace CISP1010
                 Console.WriteLine("@@@@@@@@@@@@&&&@@@@@@@@@@@@@@GGGGGBB#&&@@@@@@@@@@@@@@@#BBBBBBBPG#BBBG&PP&@@&PPG55YPGPP##BB#GBGBBBBBB##BGBJ!7JP&&&@@@@@&BB&@@@@@@@@@@@&#B#@B#@@@&57G5!77??7?Y5555");
                 Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#BBBBBB##BGGGG#&@BP&@#@GPGYPGGPGB#&B##BBBBBB##BBB#G555B&@@@@#BB@&&&@@@@@@@@@@@@@@&&&&BB#&&@&5BP7?????7!?555");
             } // end of PrintLargeWelcomeMessage
+
+            static void Loading()
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("                                                                 #                                            ");
+                Console.WriteLine("                                                                 #        ####    ##   #####  # #    #  ####  ");
+                Console.WriteLine("                                                                 #       #    #  #  #  #    # # ##   # #    # ");
+                Console.WriteLine("                                                                 #       #    # #    # #    # # # #  # #      ");
+                Console.WriteLine("                                                                 #       #    # ###### #    # # #  # # #  ### ");
+                Console.WriteLine("                                                                 #       #    # #    # #    # # #   ## #    # ");
+                Console.WriteLine("                                                                 #######  ####  #    # #####  # #    #  ####  ");
+            }
             #endregion
 
             #region "UI Methods"
@@ -455,17 +457,7 @@ namespace CISP1010
             }// end of PrintRules
 
             // loading method
-            static void Loading()
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("                                                                 #                                            ");
-                Console.WriteLine("                                                                 #        ####    ##   #####  # #    #  ####  ");
-                Console.WriteLine("                                                                 #       #    #  #  #  #    # # ##   # #    # ");
-                Console.WriteLine("                                                                 #       #    # #    # #    # # # #  # #      ");
-                Console.WriteLine("                                                                 #       #    # ###### #    # # #  # # #  ### ");
-                Console.WriteLine("                                                                 #       #    # #    # #    # # #   ## #    # ");
-                Console.WriteLine("                                                                 #######  ####  #    # #####  # #    #  ####  ");
-            }
+
             #endregion
 
             #region "UI Screens"
@@ -589,6 +581,23 @@ namespace CISP1010
             {
                 Console.WriteLine("                                                                       Thanks for playing");
                 PrintLargeWelcomeMessage();
+                Console.WriteLine();
+                Thread.Sleep(3000);
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+
+                string end1 = "                                                                               CREDITS:\n";
+                string end2 = "                                                                         Created by: Chris Pate:\n";
+                string end3 = "                                                        ASCII art created by: https://www.ascii-art-generator.org/ \n\n";
+               
+                ConsoleUtilities.PrintScroll(end1, 005, ConsoleColor.DarkRed);
+                Console.WriteLine();
+                ConsoleUtilities.PrintScroll(end2, 005, ConsoleColor.DarkRed);
+                Console.WriteLine();
+                ConsoleUtilities.PrintScroll(end3, 005, ConsoleColor.DarkRed);
+
                 Thread.Sleep(2000);
             } // end of ExitOption  
             #endregion
